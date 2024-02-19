@@ -1,10 +1,3 @@
-"""
-이 파일은 Paper Task2(Segmentation 비교)를 위해 짜여진 코드
-prompt는 bbox로 들어간다.
-사용된 image는 full size image를 사용해 inference한다. 
-
-"""
-
 import cv2
 import pickle
 import os
