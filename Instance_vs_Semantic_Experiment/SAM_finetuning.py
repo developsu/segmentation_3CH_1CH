@@ -123,9 +123,9 @@ class SamDatahandler(Dataset):
         return len(os.listdir(self.train_data_path)[1:])
     
     
-label_data_path = "/home/fisher/DATA/GMISSION/annotations/annotation_v3.pkl"
-train_data_path = "/home/fisher/DATA/GMISSION/images/"
-mask_data_path = "/home/fisher/DATA/GMISSION/masks/"
+label_data_path = "./annotation_v3.pkl"
+train_data_path = "./images/"
+mask_data_path = "./masks/"
 
 with open(label_data_path,"rb") as fr:
             labels = pickle.load(fr)
