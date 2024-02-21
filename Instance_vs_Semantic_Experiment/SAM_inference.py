@@ -19,13 +19,13 @@ from PIL import Image
 
 global labels
 
-label_data_path = "/home/fisher/DATA/GMISSION/annotations/annotation_v3.pkl"
-train_data_path = "/home/fisher/Peoples/suyeon/Paper/DATA/Test_data/img/"
-mask_data_path = "/home/fisher/Peoples/suyeon/Paper/DATA/Test_data/mask/"
-full_data_path = "/home/fisher/DATA/GMISSION/images/"
-full_mask_path = "/home/fisher/DATA/GMISSION/masks/"
-crop_mask_data_path = "/home/fisher/DATA/GMISSION/object_images/"
-save_path = "/home/fisher/Peoples/suyeon/Paper/SAM/sam_task2_output/"
+label_data_path = "./annotation_v3.pkl"
+train_data_path = "./img/"
+mask_data_path = "./mask/"
+full_data_path = "./images/"
+full_mask_path = "./masks/"
+crop_mask_data_path = "./object_images/"
+save_path = "./SAM/sam_task2_output/"
 
 def show_points(coords, labels, ax, marker_size=375):
     pos_points = coords[labels==1]
