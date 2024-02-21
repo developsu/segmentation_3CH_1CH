@@ -1,34 +1,23 @@
-from PIL import Image
-from torchvision import transforms
-import matplotlib.pyplot as plt
-import numpy as np
-from torch.nn import Softmax
-from torchmetrics.classification import Dice,BinaryAccuracy
-from torchmetrics import JaccardIndex
-from sklearn.metrics import f1_score, roc_auc_score,confusion_matrix
-import time
-# img_path ='/home/fisher/Peoples/hseung/Full/img/20220816_100GOPRO_G0020073.JPG'
-# '/home/fisher/Peoples/hseung/NEW/Train/img_same_no_pad/20220816_100GOPRO_G0050536_3.jpg'
-from PIL import Image
-from torchvision import transforms
 import numpy as np
 import pandas as pd
-import warnings
-warnings.filterwarnings('ignore')
-# mask_files = 
-from PIL import Image
-from torchvision import transforms
 import matplotlib.pyplot as plt
-import numpy as np
-from torch.nn import Softmax
-from torchmetrics.classification import Dice,BinaryAccuracy
-from torchmetrics import JaccardIndex
-from sklearn.metrics import f1_score, roc_auc_score,confusion_matrix
-import os
 import torch
 import torchvision
+from PIL import Image
+from torchvision import transforms
 from torchvision.models.detection.faster_rcnn import FastRCNNPredictor
 from torchvision.models.detection.mask_rcnn import MaskRCNNPredictor
+from torch.nn import Softmax
+from torchmetrics.classification import Dice, BinaryAccuracy
+from torchmetrics import JaccardIndex
+from sklearn.metrics import f1_score, roc_auc_score, confusion_matrix
+import warnings
+import os
+import time
+
+# 경고 메시지 무시 설정
+warnings.filterwarnings('ignore')
+
 
 import numpy as np
 def accuracy(groundtruth_mask, pred_mask):
@@ -52,17 +41,17 @@ def iou(groundtruth_mask, pred_mask):
 
 start = time.time()
 deeplab = torch.load(
-                   r'/home/fisher/Peoples/hseung/NEW/1st_Trial/dataset수정/no_pad_3class_3_zero_to_three_dataset3.pt',map_location=torch.device('cuda:2'))
-deeplabv3plus = torch.load(r'/home/fisher/Peoples/hseung/SMP_PYROCH/exp/deeplabplus_3mask_30.pt',map_location=torch.device('cuda:2'))
+                   r'./no_pad_3class_3_zero_to_three_dataset3.pt',map_location=torch.device('cuda:2'))
+deeplabv3plus = torch.load(r'./deeplabplus_3mask_30.pt',map_location=torch.device('cuda:2'))
 deeplabv3plus.eval()
 deeplab.eval()
 
-img_folder =r'/home/fisher/Peoples/hseung/Full/img' 
+img_folder =r'./img' 
 os.chdir(img_folder)
 filenames = os.listdir()
 test_file = sorted(list(filter(lambda x: ('20220817' in x) or ('20220819' in x), filenames))) 
 # len(test_file)
-mask_folder = r'/home/fisher/Peoples/hseung/Full/mask'
+mask_folder = r'./mask'
 os.chdir(mask_folder)
 mask_names = os.listdir()
 mask_file = sorted(list(filter(lambda x: ('20220817' in x) or ('20220819' in x), mask_names)))
@@ -187,5 +176,5 @@ for n in range(len(test_file)):
 
         # plt.show()
      # metric_df = metric_df.reset_index(True)
-metric_df.to_csv('/home/fisher/Peoples/hseung/NEW/deeplabv3plus_output_metric/deeplabplus_3mask_vs_deeplab_metric_new.csv', index=False)
+metric_df.to_csv('./deeplabplus_3mask_vs_deeplab_metric_new.csv', index=False)
           
