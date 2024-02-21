@@ -1,5 +1,4 @@
 import os
-os.environ['MPLBACKEND'] = 'TkAgg'
 import matplotlib.pyplot as plt
 import pandas as pd
 import numpy as np
@@ -7,17 +6,13 @@ import warnings
 import time
 import cv2
 import pickle
-# import matplotlib
 from PIL import Image
-from torchmetrics.classification import Dice,BinaryAccuracy
+from torchmetrics.classification import Dice, BinaryAccuracy
 from torchmetrics import JaccardIndex
-from sklearn.metrics import f1_score, roc_auc_score,confusion_matrix
+from sklearn.metrics import f1_score, roc_auc_score, confusion_matrix
 from torchvision import transforms
 from torch.nn import Softmax
-from torchmetrics.classification import Dice, BinaryAccuracy
-from torch.utils.data import Dataset
-from torch.utils.data import DataLoader
-from torchmetrics import JaccardIndex
+from torch.utils.data import Dataset, DataLoader
 import torch
 import torch.optim as optim
 import torch.nn as nn
@@ -27,14 +22,17 @@ from torchvision.models.detection.mask_rcnn import MaskRCNNPredictor
 import segmentation_models_pytorch as smp
 from tqdm import tqdm
 
+# 환경 변수 설정
+os.environ['MPLBACKEND'] = 'TkAgg'
+
 global labels
 device = device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 # data 불러오기
-label_data_path = "/home/fisher/DATA/GMISSION/annotations/annotation_v3.pkl"
-test_data_path = "/home/fisher/Peoples/suyeon/Paper/DATA/Test_data/img/"
-mask_data_path = "/home/fisher/Peoples/suyeon/Paper/DATA/Test_data/mask/"
-model_path = "/home/fisher/Peoples/suyeon/Paper/Unet/Save_model/epoch_25.pth"
+label_data_path = "./annotation_v3.pkl"
+test_data_path = "./img/"
+mask_data_path = "./mask/"
+model_path = "./epoch_25.pth"
 
 datasize = len(os.listdir(test_data_path))
 
@@ -209,7 +207,7 @@ final_dice = total_dice/count
 final_acc = total_acc/count
 final_f1 = total_f1/count
 
-f1 = open("/home/fisher/Peoples/suyeon/Paper/Unet/Unet_compare_01_012_result.txt", 'w')
+f1 = open("./Unet_compare_01_012_result.txt", 'w')
 f1.write(f"jaccard = {final_jaccard}\n")
 f1.write(f"dice = {final_dice}\n")
 f1.write(f"acc = {final_acc}\n")

@@ -3,39 +3,29 @@ from torchvision import transforms
 import matplotlib.pyplot as plt
 import numpy as np
 from torch.nn import Softmax
-from torchmetrics.classification import Dice,BinaryAccuracy
-from torchmetrics import JaccardIndex
-from sklearn.metrics import f1_score, roc_auc_score,confusion_matrix
+from torchmetrics.classification import Dice, BinaryAccuracy, JaccardIndex
+from sklearn.metrics import f1_score, roc_auc_score, confusion_matrix
 import time
-from PIL import Image
-from torchvision import transforms
-import numpy as np
 import pandas as pd
 import warnings
-warnings.filterwarnings('ignore')
-# mask_files = 
-
+import os
 import torch
 import torchvision
 from torchvision.models.detection.faster_rcnn import FastRCNNPredictor
 from torchvision.models.detection.mask_rcnn import MaskRCNNPredictor
+
+# 경고 메시지 무시 설정
+warnings.filterwarnings('ignore')
+
 start = time.time()
 
 deeplab = torch.load(
-                   r'/home/fisher/Peoples/hseung/NEW/1st_Trial/dataset수정/no_pad_3class_3_zero_to_three_dataset3.pt',map_location=torch.device('cuda:2'))
-deeplab01 = torch.load(r'/home/fisher/Peoples/hseung/NEW/1st_Trial/new_learning_Rate/original_real.pt',map_location=torch.device('cuda:2'))
+                   r'./no_pad_3class_3_zero_to_three_dataset3.pt',map_location=torch.device('cuda:2'))
+deeplab01 = torch.load(r'./original_real.pt',map_location=torch.device('cuda:2'))
 deeplab01.eval()
 deeplab.eval()
 
-from PIL import Image
-from torchvision import transforms
-import matplotlib.pyplot as plt
-import numpy as np
-from torch.nn import Softmax
-from torchmetrics.classification import Dice,BinaryAccuracy
-from torchmetrics import JaccardIndex
-from sklearn.metrics import f1_score, roc_auc_score,confusion_matrix
-import os
+
 def accuracy(groundtruth_mask, pred_mask):
     intersect = np.sum(pred_mask*groundtruth_mask)
     union = np.sum(pred_mask) + np.sum(groundtruth_mask) - intersect
@@ -56,12 +46,12 @@ def iou(groundtruth_mask, pred_mask):
     return round(iou_score, 3)
 
 
-img_folder =r'/home/fisher/Peoples/hseung/Full/img' 
+img_folder =r'./img' 
 os.chdir(img_folder)
 filenames = os.listdir()
 test_file = sorted(list(filter(lambda x: ('20220817' in x) or ('20220819' in x), filenames))) 
 # len(test_file)
-mask_folder = r'/home/fisher/Peoples/hseung/Full/mask'
+mask_folder = r'./mask'
 os.chdir(mask_folder)
 mask_names = os.listdir()
 mask_file = sorted(list(filter(lambda x: ('20220817' in x) or ('20220819' in x), mask_names)))
@@ -158,7 +148,7 @@ for n in range(len(test_file)):
 # # 제목 간 간격 조정
         plt.subplots_adjust(top=0.8)
 
-        plt.savefig(f'/home/fisher/Peoples/hseung/NEW/segment outputs/original_vsdeeplab/{name}_{m}.png')
+        plt.savefig(f'./original_vsdeeplab/{name}_{m}.png')
 #코드 돌려쓰면서...변수 명을 많이 안 바꿔서 쓰다보니깐 mask_pred라고 되어있지만 사실 deeplab01 맞아         
         #metric time
         deep_pred= np.where(deeplab_output ==True, 1 ,0)
@@ -189,5 +179,5 @@ for n in range(len(test_file)):
 
         # plt.show()
      metric_df = metric_df.reset_index(True)
-metric_df.to_csv('/home/fisher/Peoples/hseung/NEW/deeplabv3plus_output_metric/deeplab01_vs_deeplabv3_012_new_metric_222222_0215.csv', index=False)
+metric_df.to_csv('./deeplab01_vs_deeplabv3_012_new_metric_222222_0215.csv', index=False)
           

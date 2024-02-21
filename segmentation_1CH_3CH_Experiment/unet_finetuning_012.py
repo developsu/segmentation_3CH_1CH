@@ -17,11 +17,10 @@ global labels
 device = "cuda:1"
 
 # data 불러오기
-label_data_path = "/home/fisher/DATA/GMISSION/annotations/annotation_v3.pkl"
-train_data_path = "/home/fisher/Peoples/hseung/NUBchi/Training/img/"
-mask_data_path = "/home/fisher/Peoples/hseung/NUBchi/Training/mask/"
-model_path = "/home/fisher/Peoples/suyeon/Paper/Unet/Save_model/"
-log_path = "/home/fisher/Peoples/suyeon/Paper/Unet/log/"
+label_data_path = "./annotation_v3.pkl"
+train_data_path = "./img/"
+mask_data_path = "./mask/"
+model_path = "./Save_model/"
 
 datasize = len(os.listdir(train_data_path))
 
@@ -88,7 +87,7 @@ model = smp.Unet(encoder_weights = 'imagenet',
                  classes=1)
 
 # 저장된 모델 불러오기
-model.load_state_dict(torch.load("/home/fisher/Peoples/suyeon/Paper/Unet/Save_model/epoch_0.pth"))
+model.load_state_dict(torch.load("./Save_model/epoch_0.pth"))
 
 # 모델의 파라미터를 디바이스로 이동
 model.to(device)
