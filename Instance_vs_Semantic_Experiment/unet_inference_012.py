@@ -31,11 +31,11 @@ global labels
 device = device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 # data 불러오기
-label_data_path = "/home/fisher/DATA/GMISSION/annotations/annotation_v3.pkl"
-test_data_path = "/home/fisher/Peoples/suyeon/Paper/DATA/Test_data/img/"
-mask_data_path = "/home/fisher/Peoples/suyeon/Paper/DATA/Test_data/mask/"
-model_path = "/home/fisher/Peoples/suyeon/Paper/Unet/Unet012/Save_model/"
-log_path = "/home/fisher/Peoples/suyeon/Paper/Unet/Unet012/"
+label_data_path = "./annotation_v3.pkl"
+test_data_path = "./img/"
+mask_data_path = "./mask/"
+model_path = "./Save_model/"
+log_path = "./Unet012/"
 
 datasize = len(os.listdir(test_data_path))
 
